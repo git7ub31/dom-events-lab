@@ -2,13 +2,11 @@
 const buttons = document.querySelectorAll('.button');
 const calculator = document.querySelector('#calculator');
 const display = document.querySelector(".display")
+
+/*-------------------------------- Variables --------------------------------*/
 let firstDigit = ""
 let secondDigit = ""
 let operator = ""
-/*-------------------------------- Variables --------------------------------*/
-
-/*------------------------ Cached Element References ------------------------*/
-
 /*----------------------------- Event Listeners -----------------------------*/
 
 buttons.forEach((button) => {
