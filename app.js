@@ -26,6 +26,7 @@ buttons.forEach((button) => {
     // This log is for testing purposes to verify we're getting the correct value
     // You have to click a button to see this log
     console.log(event.target.innerText);}
+  )
   
     // do one for each kind of button class
     if (event.target.classList.contains('number')) {
