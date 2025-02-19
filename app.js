@@ -1,63 +1,68 @@
 /*-------------------------------- Constants --------------------------------*/
 const buttons = document.querySelectorAll('.button');
 const calculator = document.querySelector('#calculator');
-const display = document.querySelector(".display")
+const display = document.querySelector(".display");
 
 /*-------------------------------- Variables --------------------------------*/
-let firstDigit = ""
-let secondDigit = ""
-let operator = ""
+let firstDigit = "";
+let secondDigit = "";
+let operator = "";
+
 /*----------------------------- Event Listeners -----------------------------*/
-
 buttons.forEach((button) => {
-    button.addEventListener('click', (event) => {
-      // This log is for testing purposes to verify we're getting the correct value
-      const screenElement = document.createElement("li")
-      screenElement.textContent = target.innerText //input has been added to HTML
-      display.appendChild(screenElement);
-      // console.log(inputElement);
-      // console.log(event.target.innerText);
-      // Future logic to capture the button's value would go here...
-    });
-  });
-  
+  button.addEventListener('click', (event) => {
+    const value = event.target.innerText;
 
-  calculator.addEventListener('click', (event) => {
-    // This log is for testing purposes to verify we're getting the correct value
-    // You have to click a button to see this log
-    console.log(event.target.innerText);}
-  )
-  
-    // do one for each kind of button class
     if (event.target.classList.contains('number')) {
-       firstDigit += event.target.innerText;
-       display.value = firstDigit;
+      if (!operator) {
+        firstDigit += value;
+        display.innerText = firstDigit;
+      } else {
+        secondDigit += value;
+        display.innerText = secondDigit;
+      }
     }
 
-    if (event.target.classList.contains('operator') || event.target.classList.contains('equals')) {
-      operator = event.target.innerText;
-      display.value = operator;
-   }
+    if (event.target.classList.contains('operator')) {
+      if (firstDigit && secondDigit) {
+        firstDigit = doCalculation(parseInt(firstDigit), parseInt(secondDigit), operator);
+        secondDigit = "";
+      }
+      operator = value;
+    }
 
-// Example
-  //   if (event.target.innerText === '*') {
-       
-  //   }
-  // });
-  
+    if (event.target.classList.contains('equals')) {
+      if (firstDigit && secondDigit) {
+        firstDigit = doCalculation(parseInt(firstDigit), parseInt(secondDigit), operator);
+        secondDigit = "";
+        display.innerText = firstDigit; 
+        operator = "";
+      }
+    }
+
+    if (event.target.classList.contains('operator') && value === 'C') {
+      firstDigit = "";
+      secondDigit = "";
+      operator = "";
+      display.innerText = "";
+    }
+  });
+});
+
 /*-------------------------------- Functions --------------------------------*/
-//do all of the combinations
-const doCalculations = (first, second, operator) => {
+
+const doCalculation = (first, second, operator) => {
   let calculation = 0;
-  if(operator === "+"){
+
+  if (operator === "+") {
     calculation = first + second;
-  }else if(operator === "-"){
+  } else if (operator === "-") {
     calculation = first - second;
-  }else if(operator=== "*"){
+  } else if (operator === "*") {
     calculation = first * second;
-  }else if(operator === "/"){
+  } else if (operator === "/") {
     calculation = first / second;
   }
-}
 
-doCalculations();
+  return calculation;
+};
